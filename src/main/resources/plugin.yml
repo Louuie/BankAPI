@@ -1,0 +1,9 @@
+name: Bank
+version: '${project.version}'
+main: bank.bank.Bank
+api-version: 1.17
+commands:
+  pay:
+    description: setups a transaction between two players.
+  bal:
+    description: checks the players balance.

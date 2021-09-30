@@ -1,59 +1,13 @@
 language: java
-jdk:
-  - openjdk16
-cache:
-  directories:
-    - $HOME/.m2/
-install:
-  - >-
-    wget
-    https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.8-R0.1-SNAPSHOT >> /dev/null
-    2>&1 || java -jar BuildTools.jar --rev 1.8 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.8.3-R0.1-SNAPSHOT >> /dev/null
-    2>&1 || java -jar BuildTools.jar --rev 1.8.3 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.8.8-R0.1-SNAPSHOT >> /dev/null
-    2>&1 || java -jar BuildTools.jar --rev 1.8.8 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.9-R0.1-SNAPSHOT >> /dev/null
-    2>&1 || java -jar BuildTools.jar --rev 1.9 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.9.4-R0.1-SNAPSHOT >> /dev/null
-    2>&1 || java -jar BuildTools.jar --rev 1.9.4 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.10.2-R0.1-SNAPSHOT >>
-    /dev/null 2>&1 || java -jar BuildTools.jar --rev 1.10.2 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.11.2-R0.1-SNAPSHOT >>
-    /dev/null 2>&1 || java -jar BuildTools.jar --rev 1.11.2 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.12.2-R0.1-SNAPSHOT >>
-    /dev/null 2>&1 || java -jar BuildTools.jar --rev 1.12.2 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.13-R0.1-SNAPSHOT >> /dev/null
-    2>&1 || java -jar BuildTools.jar --rev 1.13 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.13.2-R0.1-SNAPSHOT >>
-    /dev/null 2>&1 || java -jar BuildTools.jar --rev 1.13.2 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.14.4-R0.1-SNAPSHOT >>
-    /dev/null 2>&1 || java -jar BuildTools.jar --rev 1.14.4 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.15.2-R0.1-SNAPSHOT >>
-    /dev/null 2>&1 || java -jar BuildTools.jar --rev 1.15.2 >> /dev/null 2>&1
-  - >-
-    ls $HOME/.m2/repository/org/spigotmc/spigot/1.16.1-R0.1-SNAPSHOT >>
-    /dev/null 2>&1 || java -jar BuildTools.jar --rev 1.16.1 >> /dev/null 2>&1
-script:
-  - mvn clean install
-deploy:
-  provider: releases
-  api_key: "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"
-  file_glob: true
-  file: directory/*
-  skip_cleanup: true
-  on:
-    tags: true
+jdk: [ openjdk8 ]
+branches:
+  except:
+    - gh-pages
+sudo: false
+env:
+  global:
+    - secure: "lkC+9PeVPx0sFEAITPszoHvPV9jnavsJdA3Slo4FakzTB5AlERHszto4RdenAhPf347r8xKL120YvDxDeYvmffpG7NUcRXfQZxod1SRyFEFUUBC0zGHkLiJlBjAqkSEDacruldT4+1BCqRc/A96zj17knmUkvKnyutQtasOGKxk="
+    - secure: "UxxyRTgZFxEbzxfpEKFC6bYVKkhVp/kOCy5QZwbctkwQP33l3eEwDUquDVXewwLWgM6yJvWdUq9Va/f2kJ8Z7NMHLj5UTj3zIWdqJ/dZIrZ32Vb6tTawXV56627ANLsGHfw55uqIIHFs3u3HUlucyYhBAxLsxJNR4XbU2IeA8fA="
+    - secure: "ljUPRZkuNEqck8RIHONVD7lCr1a/aslagOQ27uB0EpuOMGfeBlDdAlpo+GnRSs2bsfvUGX9nmcgGPR6mTcV0fzHaSBg+p/BPWBuzo9wEs39H4wn8yVU70pu/wCEuRhGlFw4GE0mYp8pbHMHrc8WdxsF3dt4kAGsdVhivXuz9HHI="
+after_success:
+- .utility/do-publish.sh

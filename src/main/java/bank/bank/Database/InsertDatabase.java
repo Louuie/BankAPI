@@ -47,7 +47,7 @@ public class InsertDatabase {
                     EstablishConnection establishConnection = new EstablishConnection();
                     Connection con = establishConnection.establishConnection();
                     ConfigGetter cg = new ConfigGetter();
-                    String sql = "CREATE TABLE IF NOT EXISTS " + cg.getTable() + " (uuid VARCHAR(255), balance INT(255), PRIMARY KEY (uuid))";
+                    String sql = "CREATE TABLE IF NOT EXISTS vault (uuid VARCHAR(255), balance INT(255), PRIMARY KEY (uuid))";
                     PreparedStatement stmt = con.prepareStatement(sql);
                     stmt.executeUpdate();
                 } catch (SQLException e) {

@@ -3,6 +3,7 @@ package bank.bank.Database;
 import bank.bank.Bank;
 import bank.bank.Config.ConfigGetter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,17 +28,14 @@ public class QueryDatabase {
         new BukkitRunnable(){
             @Override
             public void run(){
-                String sql = "SELECT uuid, balance " + "FROM " + cs.getTable();
+                String sql = "SELECT balance FROM vault WHERE uuid=('"+player.getUniqueId()+"')";
                 try {
                     Connection con = establishConnection.establishConnection();
                     PreparedStatement stmt = con.prepareStatement(sql);
                     ResultSet rs = stmt.executeQuery();
-                    while(rs.next()) {
-                        UUID configUUID = UUID.fromString(rs.getString(cs.getUUIDColumnName()));
-                        if(player.getUniqueId().equals(configUUID)) {
-                            balance = rs.getInt(cs.getBalanceColumnName());
-                            result.complete(balance);
-                        }
+                    if(rs.next()){
+                        balance = rs.getInt("balance");
+                        result.complete(balance);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -60,14 +58,10 @@ public class QueryDatabase {
                     PreparedStatement stmt = con.prepareStatement(sql);
                     stmt.setString(1, p.getUniqueId().toString());
                     ResultSet rs = stmt.executeQuery();
-                    while(rs.next()){
-                        UUID configUUID = UUID.fromString(rs.getString(cs.getUUIDColumnName()));
-                        if(p.getUniqueId().equals(configUUID)){
-                            result.complete(true);
-                        } else{
-                            result.complete(false);
-                        }
+                    if(rs.next()){
+                        result.complete(true);
                     }
+                    result.complete(false);
                 }catch (SQLException e){
                     e.printStackTrace();
                 }

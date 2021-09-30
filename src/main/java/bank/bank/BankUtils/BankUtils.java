@@ -13,9 +13,14 @@ public class BankUtils {
     QueryDatabase queryDatabase = new QueryDatabase();
     InsertDatabase insertDatabase = new InsertDatabase();
     public void addMoney(Player player,  int m){
-        queryDatabase.getBalance(player).thenAccept(balance -> {
-            insertDatabase.insertQuery(player, balance + m);
+        queryDatabase.fetchPlayer(player).thenAccept(exists -> {
+            if(exists){
+                queryDatabase.getBalance(player).thenAccept(balance -> {
+                    insertDatabase.insertQuery(player, balance + m);
+                });
+            } else {insertDatabase.createPlayer(player, m);}
         });
+
     }
 
     public void removeMoney(Player player, int m){
@@ -25,14 +30,18 @@ public class BankUtils {
     }
 
     public void setupTransaction(Player sender, Player receiver, int value) {
-        queryDatabase.getBalance(sender.getPlayer()).thenAccept(balance -> {
-            if (balance < value) {
-                sender.sendMessage(ChatColor.RED + "Insufficient Funds!");
-            } else {
-                addMoney(receiver, value);
-                removeMoney(sender, value);
-                sender.sendMessage("you sent $" + value + " to " + receiver.getName());
-            }
+        queryDatabase.fetchPlayer(sender).thenAccept(exists -> {
+            if(exists){
+                queryDatabase.getBalance(sender.getPlayer()).thenAccept(balance -> {
+                    if (balance < value) {
+                        sender.sendMessage(ChatColor.RED + "Insufficient Funds!");
+                    } else {
+                        addMoney(receiver, value);
+                        removeMoney(sender, value);
+                        sender.sendMessage("you sent $" + value + " to " + receiver.getName());
+                    }
+                });
+            } else {sender.sendMessage(ChatColor.RED + "you have no money in the bank!");}
         });
     }
 }

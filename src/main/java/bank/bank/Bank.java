@@ -1,5 +1,6 @@
 package bank.bank;
 
+import bank.bank.Database.InsertDatabase;
 import bank.bank.Events.JoinEvent;
 import bank.bank.Commands.Balance;
 import bank.bank.Commands.Pay;
@@ -13,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
 
 public final class Bank extends JavaPlugin {
-    public static HashMap<Player, Integer> bal = new HashMap();
 
     private QueryDatabase qdb;
     public QueryDatabase getQueryDB(){
@@ -31,8 +31,8 @@ public final class Bank extends JavaPlugin {
         instance = this;
         DatabaseConfig.setup();
         DatabaseConfig.save();
-        ConfigSetter cs = new ConfigSetter();
-        cs.configSetup();
+        InsertDatabase insertDatabase = new InsertDatabase();
+        insertDatabase.createTable();
         Bukkit.getLogger().info("Starting Bank");
         this.getCommand("pay").setExecutor(new Pay());
         this.getCommand("bal").setExecutor(new Balance());

@@ -16,12 +16,6 @@ public class JoinEvent implements Listener {
         InsertDatabase insertDatabase = new InsertDatabase();
         BankUtils bank = new BankUtils();
         Player p = e.getPlayer();
-        queryDatabase.fetchPlayer(p).thenAccept(exists -> {
-            if (exists) {
-                bank.addMoney(p, 100);
-            } else {
-                insertDatabase.insertQuery(p, 100);
-            }
-        });
+        bank.addMoney(p, 0);
     }
 }

@@ -1,37 +1,24 @@
-## Welcome to GitHub Pages
+# BankAPI [![Build Status](https://app.travis-ci.com/eliasdandouch/Bank.svg?branch=master)](https://app.travis-ci.com/eliasdandouch/Bank)
 
-You can use the [editor on GitHub](https://github.com/eliasdandouch/BankAPI/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## About
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This API is a very simple Spigot Bank API that uses a mySQL Database to store and retrive data.
 
-### Markdown
+</br>Using the API with Maven
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+``` xml
+<repositories>
+ <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+ </repository>
+</repositories>
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+<dependencies>
+ <dependency>
+     <groupId>com.github.eliasdandouch</groupId>
+     <artifactId>Bank</artifactId>
+     <version>v0.1-Beta</version>
+ </dependency>
+</dependencies>
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/eliasdandouch/BankAPI/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.

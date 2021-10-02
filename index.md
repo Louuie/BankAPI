@@ -1,4 +1,4 @@
-# BankAPI [![Build Status](https://app.travis-ci.com/eliasdandouch/Bank.svg?branch=master)](https://app.travis-ci.com/eliasdandouch/Bank)
+# BankAPI [![Build Status](https://app.travis-ci.com/eliasdandouch/BankAPI.svg?branch=master)](https://app.travis-ci.com/eliasdandouch/BankAPI)
 
 ## About
 

@@ -7,9 +7,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Class that establishes the connection to the database
+ */
 public class EstablishConnection {
     Connection connection;
-
     public Connection establishConnection(){
         ConfigGetter cg = new ConfigGetter();
         try{

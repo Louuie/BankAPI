@@ -4,14 +4,10 @@ import bank.bank.Database.InsertDatabase;
 import bank.bank.Events.JoinEvent;
 import bank.bank.Commands.Balance;
 import bank.bank.Commands.Pay;
-import bank.bank.Config.ConfigSetter;
 import bank.bank.Config.DatabaseConfig;
 import bank.bank.Database.QueryDatabase;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.HashMap;
 
 public final class Bank extends JavaPlugin {
 

@@ -12,10 +12,19 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
+/**
+ * Class that inserts the data into the database.
+ */
 public class InsertDatabase {
+    ConfigGetter cg = new ConfigGetter();
     private Bank bankClass = Bank.getInstance();
     private Boolean exists;
-    // Queries through then inserts data into the database.
+
+    /**
+     * Inserts the player into the database
+     * @param player
+     * @param value
+     */
     public void insertQuery(Player player, int value){
         new BukkitRunnable(){
             @Override
@@ -26,7 +35,7 @@ public class InsertDatabase {
                 //Establishes Connection with Database
                 Connection con = establishConnection.establishConnection();
                 //Gets the players balance from the async method.
-                String sql = "UPDATE vault SET balance = ? WHERE uuid = ?";
+                String sql = "UPDATE " + cg.getTable() + " SET balance = ? WHERE uuid = ?";
                 try {
                     PreparedStatement stmt = con.prepareStatement(sql);
                     stmt.setInt(1, value);
@@ -39,6 +48,9 @@ public class InsertDatabase {
         }.runTaskAsynchronously(bankClass);
     }
 
+    /**
+     * Creates the table if it doesn't already exist
+     */
     public void createTable(){
         new BukkitRunnable(){
             @Override
@@ -46,8 +58,7 @@ public class InsertDatabase {
                 try {
                     EstablishConnection establishConnection = new EstablishConnection();
                     Connection con = establishConnection.establishConnection();
-                    ConfigGetter cg = new ConfigGetter();
-                    String sql = "CREATE TABLE IF NOT EXISTS vault (uuid VARCHAR(255), balance INT(255), PRIMARY KEY (uuid))";
+                    String sql = "CREATE TABLE IF NOT EXISTS " + cg.getTable() + " (uuid VARCHAR(255), balance INT(255), PRIMARY KEY (uuid))";
                     PreparedStatement stmt = con.prepareStatement(sql);
                     stmt.executeUpdate();
                 } catch (SQLException e) {
@@ -57,6 +68,11 @@ public class InsertDatabase {
         }.runTaskAsynchronously(bankClass);
     }
 
+    /**
+     * Creates a player if they don't already exist
+     * @param player
+     * @param value
+     */
     public void createPlayer(Player player, int value){
         new BukkitRunnable(){
             @Override
@@ -64,7 +80,7 @@ public class InsertDatabase {
                 try {
                     EstablishConnection establishConnection = new EstablishConnection();
                     Connection con = establishConnection.establishConnection();
-                    String sql = "INSERT INTO vault (uuid, balance) VALUE (?, ?)";
+                    String sql = "INSERT INTO " + cg.getTable() + " (uuid, balance) VALUE (?, ?)";
                     PreparedStatement stmt = con.prepareStatement(sql);
                     stmt.setString(1, player.getUniqueId().toString());
                     stmt.setInt(2, value);

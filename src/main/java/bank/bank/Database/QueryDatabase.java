@@ -14,8 +14,11 @@ import java.sql.SQLException;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Class that queries through the database to retrieve data
+ */
 public class QueryDatabase {
-    private Bank bankClass = Bank.getInstance();
+    private final Bank bankClass = Bank.getInstance();
     Connection connection;
     private Player p;
     private String uuid;
@@ -23,36 +26,18 @@ public class QueryDatabase {
     ConfigGetter cs = new ConfigGetter();
     EstablishConnection establishConnection = new EstablishConnection();
 
-    public CompletableFuture<Integer> getBalance(Player player){
-        CompletableFuture<Integer> result = new CompletableFuture<>();
-        new BukkitRunnable(){
-            @Override
-            public void run(){
-                String sql = "SELECT balance FROM vault WHERE uuid=('"+player.getUniqueId()+"')";
-                try {
-                    Connection con = establishConnection.establishConnection();
-                    PreparedStatement stmt = con.prepareStatement(sql);
-                    ResultSet rs = stmt.executeQuery();
-                    if(rs.next()){
-                        balance = rs.getInt("balance");
-                        result.complete(balance);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.runTaskAsynchronously(bankClass);
-        return result;
-    }
 
-
-
+    /**
+     * Fetches the player from the database and returns true if they are present in the database
+     * @param p
+     * @return
+     */
     public CompletableFuture<Boolean> fetchPlayer(Player p){
         CompletableFuture<Boolean> result = new CompletableFuture<>();
         new BukkitRunnable(){
             @Override
             public void run(){
-                String sql = "SELECT * FROM `vault` WHERE uuid=?";
+                String sql = "SELECT * FROM " + cs.getTable() + " WHERE uuid=?";
                 try {
                     Connection con = establishConnection.establishConnection();
                     PreparedStatement stmt = con.prepareStatement(sql);

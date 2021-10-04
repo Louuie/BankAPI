@@ -1,8 +1,7 @@
 package bank.bank.Commands;
 
 import bank.bank.Bank;
-import bank.bank.BankUtils.BankUtils;
-import bank.bank.Database.QueryDatabase;
+import bank.bank.BankUtils.BankAPI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,10 +16,10 @@ public class Balance implements CommandExecutor {
         if(label.equalsIgnoreCase("bal")){
             if(sender instanceof Player){
                 Player p = (Player) sender;
-                QueryDatabase bankDatabase = new QueryDatabase();
+                BankAPI bank = new BankAPI();
                 if(sender.hasPermission("bank.checkbal")){
                     if(args.length == 0){
-                        bankDatabase.getBalance(p).thenAccept(bal -> {
+                        bank.getBalance(p).thenAccept(bal -> {
                             p.sendMessage("your bal $" + bal);
                         });
                     }

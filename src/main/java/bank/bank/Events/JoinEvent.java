@@ -1,6 +1,6 @@
 package bank.bank.Events;
 
-import bank.bank.BankUtils.BankUtils;
+import bank.bank.BankUtils.BankAPI;
 import bank.bank.Database.InsertDatabase;
 import bank.bank.Database.QueryDatabase;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ public class JoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         QueryDatabase queryDatabase = new QueryDatabase();
         InsertDatabase insertDatabase = new InsertDatabase();
-        BankUtils bank = new BankUtils();
+        BankAPI bank = new BankAPI();
         Player p = e.getPlayer();
         bank.addMoney(p, 0);
     }

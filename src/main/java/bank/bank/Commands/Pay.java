@@ -1,6 +1,6 @@
 package bank.bank.Commands;
 
-import bank.bank.BankUtils.BankUtils;
+import bank.bank.BankUtils.BankAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -24,8 +24,8 @@ public class Pay implements CommandExecutor {
                         if(tUser == null){
                             p.sendMessage(ChatColor.RED + args[0] + " does not exist");
                         } else {
-                            BankUtils bank = new BankUtils();
-                            bank.setupTransaction(p, tUser, value);
+                            BankAPI bank = new BankAPI();
+                            bank.setupMoneyTransaction(p, tUser, value);
                             }
                         }
                         }
